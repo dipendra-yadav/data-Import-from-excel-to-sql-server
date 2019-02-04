@@ -29,7 +29,6 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 	SessionFactory sessionFactory;
 
 	Session session = null;
-
 	Transaction tx = null;
 
 	@Override
@@ -38,14 +37,15 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 		System.out.println(".......Hibernate Batch Processing starts.......\n");
 		try {
 			session = sessionFactory.openSession();
-			tx = session.beginTransaction();
+			
 
-			int batchSize = 20, totalRecords = 100;
+			//int batchSize = 20, totalRecords = 100;
 
 			// - - - - - - - - - - - - - - Hibernate/JPA Batch Insert Example - - - - - - -
 			// - - - - - //
 			//for (int i = 0; i < totalRecords; i++) {
-				for (ProductAttributesDetailsTO pto : pLists) {
+				
+			for (ProductAttributesDetailsTO pto : pLists) {
 					ProductAttributesDetails productAttributesDetails = new ProductAttributesDetails();
 
 					productAttributesDetails.setUniqueId(pto.getUniqueId());
@@ -262,12 +262,20 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 					productAttributesDetails.setLocale("es-CA");
 					productAttributesDetails.setApplication_id("CA");
 
-					session.save(productAttributesDetails); // inserts each Record into session level cache.
+					tx = session.beginTransaction();
+					//inserts each Record into session level cache.
+					//session.save(productAttributesDetails); //This creates Primary key violation
+					session.saveOrUpdate(ProductAttributesDetails.class.getName(),productAttributesDetails);//This works but very slow
+					
 					session.flush();
+					tx.commit();
+					session.clear();
+					//session.close();
+					
 
 				
 				// manually flushing the session
-			/*	if (i % batchSize == 0) {
+		/*		if (i % batchSize == 0) {
 					// Flush A Batch Of Inserts & Release Memory
 					session.flush();
 					tx.commit();

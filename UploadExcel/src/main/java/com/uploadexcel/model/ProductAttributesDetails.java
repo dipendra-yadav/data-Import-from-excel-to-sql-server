@@ -16,7 +16,7 @@ import org.hibernate.annotations.GeneratorType;
 
 @Entity
 //@Table(name = "ideaattributes", schema = "COMPAS_MASTER")
-@Table(name = "idea_attributes")
+@Table(name = "ideaattributes")
 public class ProductAttributesDetails implements Serializable
 {
 
