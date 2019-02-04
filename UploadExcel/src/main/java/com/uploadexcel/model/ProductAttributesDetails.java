@@ -1,5 +1,6 @@
 package com.uploadexcel.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Temporal;
 @Entity
 //@Table(name = "ideaattributes", schema = "COMPAS_MASTER")
 @Table(name = "ideaattributes")
-public class ProductAttributesDetails {
+public class ProductAttributesDetails  implements Serializable{
 
 	String UniqueId;
 	String RecordId;

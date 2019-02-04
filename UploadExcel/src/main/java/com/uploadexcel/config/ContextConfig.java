@@ -66,10 +66,11 @@ public class ContextConfig {
 		properties.put("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
 		
 		//Specifying Session Context 
-		properties.put("hibernate.current_session_context_class", "org.hibernate.context.internal.ThreadLocalSessionContext");
+		//properties.put("hibernate.current_session_context_class", "org.hibernate.context.internal.ThreadLocalSessionContext");
+		properties.put("hibernate.current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
 		
 		// Batching Size Settings
-		properties.put("hibernate.jdbc.batch_size", String.valueOf(30));
+		properties.put("hibernate.jdbc.batch_size", String.valueOf(10));
 		properties.put("hibernate.order_inserts", "true");
 		properties.put("hibernate.order_updates", "true");
 		properties.put("hibernate.jdbc.batch_versioned_data", "false");

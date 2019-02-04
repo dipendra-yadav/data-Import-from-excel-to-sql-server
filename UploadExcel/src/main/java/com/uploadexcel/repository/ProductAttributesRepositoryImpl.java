@@ -15,7 +15,7 @@ import com.uploadexcel.model.ProductAttributesDetailsTO;
 
 @Repository
 public class ProductAttributesRepositoryImpl implements ProductAttributesRepository {
-	
+
 	public java.util.Date parseDate(String date) throws ParseException {
 		// SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MI:SS");
 		SimpleDateFormat format = new SimpleDateFormat("YYYYMMDD");
@@ -28,8 +28,7 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 	@Autowired
 	SessionFactory sessionFactory;
 
-	
-	Session session=null;
+	Session session = null;
 
 	Transaction tx = null;
 
@@ -41,7 +40,7 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 
-			int batchSize = 30, totalRecords = 100;
+			int batchSize = 10, totalRecords = 100;
 
 			// - - - - - - - - - - - - - - Hibernate/JPA Batch Insert Example - - - - - - -
 			// - - - - - //
@@ -263,14 +262,14 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 					productAttributesDetails.setLocale("es-CA");
 					productAttributesDetails.setApplication_id("CA");
 
-					session.save(productAttributesDetails); // inserts the Records
+					session.save(productAttributesDetails); // inserts each Record into session level cache.
 
-					if (i % batchSize == 0 && i > 0) {
-						// Flush A Batch Of Inserts & Release Memory
-						session.flush();
-						session.clear();
-					}
-
+				}
+				// manually flushing the session
+				if (i % batchSize == 0) {
+					// Flush A Batch Of Inserts & Release Memory
+					session.flush();
+					session.clear();
 				}
 			}
 		}
