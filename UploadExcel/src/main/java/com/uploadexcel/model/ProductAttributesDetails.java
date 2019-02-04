@@ -5,14 +5,20 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+
+import org.hibernate.annotations.GeneratorType;
+
 @Entity
 //@Table(name = "ideaattributes", schema = "COMPAS_MASTER")
-@Table(name = "ideaattributes")
-public class ProductAttributesDetails  implements Serializable{
+@Table(name = "idea_attributes")
+public class ProductAttributesDetails implements Serializable
+{
 
 	String UniqueId;
 	String RecordId;
@@ -27,6 +33,7 @@ public class ProductAttributesDetails  implements Serializable{
 
 	@Id
 	@Column(name = "CatalogNumber")
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	String catalogNumber;// PK
 	Integer uNSPSC;
 	Short IGCC;
@@ -506,6 +513,9 @@ public class ProductAttributesDetails  implements Serializable{
 		EANUCC = eANUCC;
 	}
 
+
+
+	
 	public String getCatalogNumber() {
 		return catalogNumber;
 	}

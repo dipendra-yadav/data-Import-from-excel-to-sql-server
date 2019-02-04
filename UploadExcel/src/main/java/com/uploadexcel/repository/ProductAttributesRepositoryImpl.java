@@ -40,11 +40,11 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 			session = sessionFactory.openSession();
 			tx = session.beginTransaction();
 
-			int batchSize = 10, totalRecords = 100;
+			int batchSize = 20, totalRecords = 100;
 
 			// - - - - - - - - - - - - - - Hibernate/JPA Batch Insert Example - - - - - - -
 			// - - - - - //
-			for (int i = 0; i < totalRecords; i++) {
+			//for (int i = 0; i < totalRecords; i++) {
 				for (ProductAttributesDetailsTO pto : pLists) {
 					ProductAttributesDetails productAttributesDetails = new ProductAttributesDetails();
 
@@ -263,15 +263,18 @@ public class ProductAttributesRepositoryImpl implements ProductAttributesReposit
 					productAttributesDetails.setApplication_id("CA");
 
 					session.save(productAttributesDetails); // inserts each Record into session level cache.
+					session.flush();
 
-				}
+				
 				// manually flushing the session
-				if (i % batchSize == 0) {
+			/*	if (i % batchSize == 0) {
 					// Flush A Batch Of Inserts & Release Memory
 					session.flush();
+					tx.commit();
 					session.clear();
-				}
+				}  */
 			}
+		//}
 		}
 
 		catch (Exception e) {
